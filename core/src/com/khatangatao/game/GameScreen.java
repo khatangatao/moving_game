@@ -61,7 +61,8 @@ public class GameScreen implements Screen {
 
         //begin a new batch and draw the player
         game.batch.begin();
-        game.font.draw(game.batch, "My point will be here", 0, camera.viewportWidth);
+        game.font.draw(game.batch, "My point will be here", 0, camera.viewportHeight);
+        game.batch.draw(playerImage, player.x, player.y);
         game.batch.end();
 
         //process user input
