@@ -1,12 +1,14 @@
 package com.khatangatao.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
@@ -26,6 +28,7 @@ public class GameScreen implements Screen {
 
         //Music and sounds
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        music.setLooping(true);
 
         //Camera
         camera = new OrthographicCamera();
@@ -66,6 +69,46 @@ public class GameScreen implements Screen {
         game.batch.end();
 
         //process user input
+        if (Gdx.input.isTouched()) {
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touchPos);
+            player.x = touchPos.x - player.getWidth() / 2;
+        }
+
+        if (Gdx.input.isKeyPressed(Keys.UP)){
+            player.y += 200 * Gdx.graphics.getDeltaTime();
+
+        }
+
+        if (Gdx.input.isKeyPressed(Keys.DOWN)){
+            player.y -= 200 * Gdx.graphics.getDeltaTime();
+        }
+
+        if (Gdx.input.isKeyPressed(Keys.LEFT)){
+            player.x -= 200 * Gdx.graphics.getDeltaTime();
+        }
+
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)){
+            player.x += 200 * Gdx.graphics.getDeltaTime();
+        }
+
+        // make sure the player stays within the screen bounds
+        if (player.x < 0) {
+            player.x = 0;
+        }
+
+        if (player.x > camera.viewportWidth - player.getWidth()) {
+            player.x = camera.viewportWidth - player.getWidth();
+        }
+
+        if (player.y < 0) {
+            player.y = 0;
+        }
+
+        if (player.y > camera.viewportWidth - player.getHeight()) {
+            player.y = camera.viewportWidth - player.getHeight();
+        }
 
     }
 
@@ -91,6 +134,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        game.dispose();
+        playerImage.dispose();
+        music.dispose();
     }
 }
