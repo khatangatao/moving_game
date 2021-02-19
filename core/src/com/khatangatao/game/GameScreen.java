@@ -24,7 +24,7 @@ public class GameScreen implements Screen {
         this.game = game;
 
         // Images
-        playerImage = new Texture(Gdx.files.internal("player.png"));
+        playerImage = new Texture(Gdx.files.internal("pacman.png"));
 
         //Music and sounds
         music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
@@ -45,7 +45,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
+        // start the playback of the background music
+        // when the screen is shown
+        music.play();
     }
 
     @Override
@@ -74,6 +76,7 @@ public class GameScreen implements Screen {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
             player.x = touchPos.x - player.getWidth() / 2;
+            player.y = touchPos.y - player.getHeight() / 2;
         }
 
         if (Gdx.input.isKeyPressed(Keys.UP)){
@@ -106,8 +109,8 @@ public class GameScreen implements Screen {
             player.y = 0;
         }
 
-        if (player.y > camera.viewportWidth - player.getHeight()) {
-            player.y = camera.viewportWidth - player.getHeight();
+        if (player.y > camera.viewportHeight - player.getHeight()) {
+            player.y = camera.viewportHeight - player.getHeight();
         }
 
     }
