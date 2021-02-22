@@ -9,6 +9,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Moving extends Game {
+	public static final int HEIGHT = 480;
+	public static final int WIDTH = 800;
+
+	public static final String TITLE = "Moving Game";
+
+
 	public SpriteBatch batch;
 	public BitmapFont font;
 	

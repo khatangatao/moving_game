@@ -7,7 +7,9 @@ import com.khatangatao.game.Moving;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Moving Game";
+		config.height = Moving.HEIGHT;
+		config.width = Moving.WIDTH;
+		config.title = Moving.TITLE;
 
 		new LwjglApplication(new Moving(), config);
 	}

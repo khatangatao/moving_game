@@ -20,6 +20,10 @@ public class GameScreen implements Screen {
     OrthographicCamera camera;
     Rectangle player;
 
+    //For developent
+    long javaHeap;
+    long nativeHeap;
+
     public GameScreen(Moving game) {
         this.game = game;
 
@@ -34,13 +38,16 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
 
-        //Create a Rectangle to logically represent the bucket
+        //Create a Rectangle to logically represent the player
         player = new Rectangle();
         player.x = camera.viewportWidth / 2 - playerImage.getWidth() / 2;
         player.y = 20;
         player.width = playerImage.getWidth();
         player.height = playerImage.getHeight();
 
+        //Development
+        javaHeap = Gdx.app.getJavaHeap();
+        nativeHeap = Gdx.app.getNativeHeap();
     }
 
     @Override
@@ -66,7 +73,13 @@ public class GameScreen implements Screen {
 
         //begin a new batch and draw the player
         game.batch.begin();
+
+        //Text info
         game.font.draw(game.batch, "My point will be here", 0, camera.viewportHeight);
+        game.font.draw(game.batch, "JavaHeap: " + javaHeap, 0, camera.viewportHeight - 50);
+        game.font.draw(game.batch, "NativeHeap: " + nativeHeap, 0, camera.viewportHeight - 70);
+
+
         game.batch.draw(playerImage, player.x, player.y);
         game.batch.end();
 
@@ -79,20 +92,20 @@ public class GameScreen implements Screen {
             player.y = touchPos.y - player.getHeight() / 2;
         }
 
-        if (Gdx.input.isKeyPressed(Keys.UP)){
+        if (Gdx.input.isKeyPressed(Keys.UP)) {
             player.y += 200 * Gdx.graphics.getDeltaTime();
 
         }
 
-        if (Gdx.input.isKeyPressed(Keys.DOWN)){
+        if (Gdx.input.isKeyPressed(Keys.DOWN)) {
             player.y -= 200 * Gdx.graphics.getDeltaTime();
         }
 
-        if (Gdx.input.isKeyPressed(Keys.LEFT)){
+        if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             player.x -= 200 * Gdx.graphics.getDeltaTime();
         }
 
-        if (Gdx.input.isKeyPressed(Keys.RIGHT)){
+        if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
             player.x += 200 * Gdx.graphics.getDeltaTime();
         }
 
